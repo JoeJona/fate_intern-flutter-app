@@ -2,7 +2,13 @@
 
 A new Flutter project.
 
+# Restaurant Listing & Search app
+
 ## Getting Started
+
+Clone the repo \
+Go to the project folder in terminal \
+Then first load dependencies - pub get and then run it with - flutter run 
 
 This project is a starting point for a Flutter application.
 
