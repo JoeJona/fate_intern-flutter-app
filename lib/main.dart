@@ -8,6 +8,7 @@ void main() {
   runApp(const ProviderScope(child: const MyApp()));
 }
 
+//Fetch / Get Resturant Lists
 final restaurantLoadProvider = FutureProvider<List<RestaurantModel>>(
   (ref) async {
     return ref.watch(restaurantProvider).getRestaurants();
@@ -48,9 +49,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   void initState() {
-    super.initState();
+    // load the restaurant lists
     ref.read(restaurantLoadProvider.future).then((value) {
       loadedList = restaurantList = value;
+    super.initState();
     });
   }
 
@@ -70,7 +72,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final restaurantData = ref.watch(restaurantLoadProvider);
+    final restaurantData = ref.watch(restaurantLoadProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -91,29 +93,20 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 hintStyle: TextStyle(color: Colors.black),
             )),
           ),
-          Expanded(child: ListView.builder(
-            itemCount: restaurantList.length,
-            itemBuilder: (context, index) => Card(
-              child: ListTile(
-                title: Text(restaurantList[index].name.toString(), style: TextStyle(fontSize: 24,),),
-                subtitle: Text(restaurantList[index].cuisine.toString()),
-               ),
-              ),
-            ),),
-          // restaurantData.when(data: (restaurantList) {
-          //   return Expanded(child: ListView.builder(
-          //           itemCount: restaurantList.length,
-          //           itemBuilder: (context, index) => Card(
-          //             child: ListTile(
-          //               title: Text(restaurantList[index].name.toString(), style: TextStyle(fontSize: 24,),),
-          //               subtitle: Text(restaurantList[index].cuisine.toString()),
-          //             ),
-          //           ),
-          //         ));
-          //         }, 
-          //           error: ((error, stackTrace) => Text(error.toString())),
-          //           loading: (() => CircularProgressIndicator()),
-          // ),
+          restaurantData.when(data: (list) {
+            return Expanded(child: ListView.builder(
+                    itemCount: restaurantList.length,
+                    itemBuilder: (context, index) => Card(
+                      child: ListTile(
+                        title: Text(restaurantList[index].name.toString(), style: TextStyle(fontSize: 24,),),
+                        subtitle: Text(restaurantList[index].cuisine.toString()),
+                      ),
+                    ),
+                  ));
+                  }, 
+                    error: ((error, stackTrace) => Text(error.toString())),
+                    loading: (() => CircularProgressIndicator()),
+          ),
         ],
       ),
     );
