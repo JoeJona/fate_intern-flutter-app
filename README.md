@@ -6,7 +6,7 @@ A new Flutter project.
 
 Clone the repo \
 Go to the project folder in terminal \
-Then run - flutter run \
+Then first load dependencies - pub get and then run it with - flutter run 
 
 This project is a starting point for a Flutter application.
 
