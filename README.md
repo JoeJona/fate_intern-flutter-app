@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+# Restaurant Listing & Search app
+
 ## Getting Started
 
 Clone the repo \
